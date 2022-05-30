@@ -1,0 +1,16 @@
+.app-messaging {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
+  padding: 8px;
+}
+.app-messaging > input,
+.app-messaging > button,
+.app-messaging > pre {
+  width: 100%;
+}
+.app-messaging > pre {
+  margin: 0;
+}

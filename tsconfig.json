@@ -1,0 +1,13 @@
+{
+  "include": ["playground"],
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "types": ["vite/client"],
+    "skipLibCheck": true
+  }
+}

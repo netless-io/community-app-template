@@ -1,0 +1,24 @@
+{
+  "name": "@netless/community-apps",
+  "version": "0.1.0",
+  "private": true,
+  "packagesDir": "./packages/2022",
+  "scripts": {
+    "create-app": "node ./scripts/create-app.js"
+  },
+  "engines": {
+    "npm": "^8.0.0"
+  },
+  "devDependencies": {
+    "@netless/fastboard": "^0.3.3",
+    "@netless/window-manager": "^0.4.26",
+    "ejs": "^3.1.8",
+    "esbuild": "^0.14.42",
+    "fast-glob": "^3.2.11",
+    "fs-extra": "^10.1.0",
+    "minimist": "^1.2.6",
+    "prompts": "^2.4.2",
+    "vite": "^2.9.9",
+    "white-web-sdk": "^2.16.24"
+  }
+}

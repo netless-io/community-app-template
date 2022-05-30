@@ -1,0 +1,20 @@
+{
+  "name": "@netless/<%- fullName %>",
+  "version": "0.1.0",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.es.js",
+  "scripts": {
+    "start": "node ../../../scripts/start.js",
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "esbuild src/index.tsx --bundle --format=cjs --outfile=dist/main.cjs.js",
+    "build:esm": "esbuild src/index.tsx --bundle --format=esm --outfile=dist/main.es.js"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
+  }
+}
