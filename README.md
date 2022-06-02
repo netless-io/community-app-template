@@ -6,7 +6,7 @@
 
 前置条件：至少需要安装了 `git`、`node 16`、`npm 8`。
 
-Clone 这个项目，安装必要依赖并且[配置好房间](./playground/.env.example)后，执行 `npm run create-app` 创建 app。
+Clone 这个项目，安装必要依赖并且[配置好房间](./config.md)后，执行 `npm run create-app` 创建 app。
 
 ```bash
 git clone https://github.com/netless-io/community-apps

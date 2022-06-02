@@ -1,7 +1,7 @@
-import type { NetlessApp, WindowManager } from "@netless/window-manager";
 import { FastboardApp, register, Theme } from "@netless/fastboard";
 
 import { apps, createFastboard, mount } from "@netless/fastboard";
+import { playground, logo } from "./config";
 
 const $app = document.getElementById("app") as HTMLDivElement;
 const $theme_btn = document.getElementById("theme") as HTMLButtonElement;
@@ -12,10 +12,6 @@ let ui: ReturnType<typeof mount> | undefined;
 let theme: Theme = "light";
 
 function validate() {
-  if (!import.meta.env.VITE_DEV_APP_NAME) {
-    $app.textContent = "Please set VITE_DEV_APP_NAME before running npm start";
-    return false;
-  }
   if (!import.meta.env.VITE_APPID) {
     $app.textContent = "Please set VITE_APPID in your .env file";
     return false;
@@ -72,24 +68,6 @@ async function main() {
 }
 
 async function register_app() {
-  let playgrounds = import.meta.glob("../packages/*/*/playground.{js,ts}");
-  let playground: { default: NetlessApp; open?: (manager: WindowManager) => void } | undefined;
-  for (let path in playgrounds) {
-    if (path.includes(import.meta.env.VITE_DEV_APP_NAME)) {
-      playground = (await playgrounds[path]()) as any;
-      break;
-    }
-  }
-
-  let logos = import.meta.glob("../packages/*/*/logo.{svg,png}");
-  let logo: string | undefined;
-  for (let path in logos) {
-    if (path.includes(import.meta.env.VITE_DEV_APP_NAME)) {
-      logo = ((await logos[path]()) as any).default;
-      break;
-    }
-  }
-
   if (playground) {
     const app = playground.default;
     register({
