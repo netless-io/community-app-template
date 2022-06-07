@@ -1,3 +1,4 @@
+import "./style.css";
 import { FastboardApp, register, Theme } from "@netless/fastboard";
 
 import { apps, createFastboard, mount } from "@netless/fastboard";
