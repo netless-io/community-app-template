@@ -81,7 +81,7 @@ async function register_app() {
     apps.push({
       icon: logo || "",
       kind: app.kind,
-      label: app.kind.replace(/([a-z])([A-Z])/, "$1 $2"),
+      label: app.kind.replace(/([a-z])([A-Z])/g, "$1 $2"),
       onClick: fastboard => {
         open ? open(fastboard.manager) : fastboard.manager.addApp({ kind: app.kind });
       },
