@@ -11,14 +11,14 @@
   },
   "devDependencies": {
     "@netless/fastboard": "^0.3.3",
-    "@netless/window-manager": "^0.4.26",
+    "@netless/window-manager": "^0.4.27",
     "ejs": "^3.1.8",
     "esbuild": "^0.14.42",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.1.0",
     "minimist": "^1.2.6",
     "prompts": "^2.4.2",
-    "vite": "^2.9.9",
+    "vite": "^2.9.10",
     "white-web-sdk": "^2.16.24"
   }
 }
