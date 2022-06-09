@@ -4,13 +4,14 @@
   "description": "Template for a Netless Community App",
   "private": true,
   "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
+  "module": "dist/index.es.js",
   "files": [
     "src",
     "dist"
   ],
   "scripts": {
-    "start": "vite"
+    "start": "vite",
+    "build": "vite build"
   },
   "engines": {
     "npm": "^8.0.0"
