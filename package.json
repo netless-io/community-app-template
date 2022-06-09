@@ -16,9 +16,13 @@
   "engines": {
     "npm": "^8.0.0"
   },
+  "dependencies": {
+    "vue": "^3.2.37"
+  },
   "devDependencies": {
     "@netless/fastboard": "^0.3.3",
     "@netless/window-manager": "^0.4.30",
+    "@vitejs/plugin-vue": "^2.3.3",
     "vite": "^2.9.10",
     "white-web-sdk": "^2.16.24"
   }

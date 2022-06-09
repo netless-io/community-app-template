@@ -1,6 +1,8 @@
 import type { NetlessApp } from "@netless/window-manager";
 
+import { createApp } from "vue";
 import styles from "./style.css?inline";
+import App from "./components/App.vue";
 
 /**
  * Register it before joining room:
@@ -27,22 +29,12 @@ const HelloWorld: NetlessApp = {
     $content.className = "app-hello-world";
     box.mountContent($content);
 
-    const $button = document.createElement("button");
-    $content.appendChild($button);
+    const app = createApp(App).provide("context", context);
 
-    const storage = context.createStorage("counter", { count: 0 });
-    $button.onclick = ev => {
-      storage.setState({ count: storage.state.count + (ev.shiftKey ? -1 : 1) });
-    };
-
-    function refresh() {
-      $button.textContent = String(storage.state.count);
-    }
-    const dispose = storage.addStateChangedListener(refresh);
-    refresh();
+    app.mount($content);
 
     context.emitter.on("destroy", () => {
-      dispose();
+      app.unmount();
     });
   },
 };
