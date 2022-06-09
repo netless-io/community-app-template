@@ -1,4 +1,4 @@
-import { createFastboard, mount, Theme } from "@netless/fastboard";
+import { createFastboard, mount } from "@netless/fastboard";
 import { get_uid } from "./query";
 import { registering } from "./register";
 import "./style.css";
@@ -36,14 +36,14 @@ async function main() {
 }
 
 /** Put some object in `window` for debugging. */
-function expose(record: Record<string, any>) {
+function expose(record) {
   Object.assign(window, record);
   console.debug("debug variables:", Object.keys(record).join());
 }
 
 /** Setup basic UI. */
 function setup() {
-  const $app = document.querySelector("#app")!;
+  const $app = document.querySelector("#app");
 
   const $whiteboard = $app.appendChild(document.createElement("div"));
   $whiteboard.id = "whiteboard";
@@ -55,15 +55,15 @@ function setup() {
   $resetBtn.id = "reset";
   $resetBtn.title = "Remove all apps & Clear whiteboard";
   $resetBtn.textContent = "Reset";
-  let onResetCallback: (() => void) | undefined;
+  let onResetCallback;
   $resetBtn.onclick = () => onResetCallback && onResetCallback();
 
   const $themeBtn = $controls.appendChild(document.createElement("button"));
   $themeBtn.id = "theme";
-  const themeCallbacks: ((theme: Theme) => void)[] = [];
+  const themeCallbacks = [];
   const prefersDark = matchMedia("(prefers-color-scheme: dark)");
-  let theme: Theme;
-  function toggleTheme(ev?: { matches: boolean }) {
+  let theme;
+  function toggleTheme(ev) {
     if (ev) {
       theme = ev.matches ? "dark" : "light";
     } else {
@@ -80,7 +80,7 @@ function setup() {
 
   return {
     $whiteboard,
-    onReset: (fn: () => void) => (onResetCallback = fn),
-    onThemeChanged: (fn: (theme: Theme) => void) => (themeCallbacks.push(fn), fn(theme)),
+    onReset: fn => (onResetCallback = fn),
+    onThemeChanged: fn => (themeCallbacks.push(fn), fn(theme)),
   };
 }

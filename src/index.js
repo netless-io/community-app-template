@@ -1,4 +1,4 @@
-import type { NetlessApp } from "@netless/window-manager";
+/// <reference types="vite/client" />
 
 import styles from "./style.css?inline";
 
@@ -16,8 +16,10 @@ import styles from "./style.css?inline";
  * ```
  * Read more about how to make a netless app here:
  * https://github.com/netless-io/window-manager/blob/master/docs/develop-app.md
+ *
+ * @type {import("@netless/window-manager").NetlessApp}
  */
-const HelloWorld: NetlessApp = {
+const HelloWorld = {
   kind: "HelloWorld",
   setup(context) {
     const box = context.getBox();

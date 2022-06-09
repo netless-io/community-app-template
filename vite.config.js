@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
+      entry: path.resolve(__dirname, "src/index.js"),
       formats: ["cjs", "es"],
       fileName: "index",
     },

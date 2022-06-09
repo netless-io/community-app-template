@@ -17,13 +17,13 @@ export function get_uid() {
   return uid;
 }
 
-function update_query(set: Record<string, string | undefined>) {
+function update_query(set) {
   const query = new URLSearchParams(location.search);
   for (const key of Object.keys(set)) {
     if (set[key] === undefined) {
       query.delete(key);
     } else {
-      query.set(key, set[key]!);
+      query.set(key, set[key]);
     }
   }
   history.replaceState(null, "", "?" + query.toString());
