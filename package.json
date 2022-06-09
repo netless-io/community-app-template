@@ -16,9 +16,15 @@
   "engines": {
     "npm": "^8.0.0"
   },
+  "dependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
   "devDependencies": {
     "@netless/fastboard": "^0.3.3",
     "@netless/window-manager": "^0.4.30",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
     "vite": "^2.9.10",
     "white-web-sdk": "^2.16.24"
   }

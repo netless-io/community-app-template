@@ -1,5 +1,8 @@
 import type { NetlessApp } from "@netless/window-manager";
 
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { App } from "./components/App";
 import styles from "./style.css?inline";
 
 /**
@@ -27,22 +30,12 @@ const HelloWorld: NetlessApp = {
     $content.className = "app-hello-world";
     box.mountContent($content);
 
-    const $button = document.createElement("button");
-    $content.appendChild($button);
+    const root = createRoot($content);
 
-    const storage = context.createStorage("counter", { count: 0 });
-    $button.onclick = ev => {
-      storage.setState({ count: storage.state.count + (ev.shiftKey ? -1 : 1) });
-    };
-
-    function refresh() {
-      $button.textContent = String(storage.state.count);
-    }
-    const dispose = storage.addStateChangedListener(refresh);
-    refresh();
+    root.render(<App context={context} />);
 
     context.emitter.on("destroy", () => {
-      dispose();
+      root.unmount();
     });
   },
 };

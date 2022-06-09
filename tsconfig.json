@@ -8,6 +8,7 @@
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
     "types": ["vite/client"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "jsx": "react"
   }
 }
