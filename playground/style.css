@@ -1,13 +1,28 @@
+:root {
+  --color: #333;
+  --bg-color: #fff;
+  --bg-color2: #f6f9fc;
+}
+
+[data-theme="dark"] {
+  --color: #eee;
+  --bg-color: #302e30;
+  --bg-color2: #121212;
+}
+
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
-  display: block;
-  margin: 0;
   width: 100%;
-  height: 100vh;
-  background: rgb(246, 249, 252);
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-color2);
 }
 
 #app {
@@ -16,82 +31,39 @@ body {
   padding: 20px;
 }
 
-.netless-window-manager-playground,
-.netless-window-manager-sizer {
-  overflow: unset;
+#whiteboard {
+  width: 100%;
+  height: 100%;
 }
 
-.netless-window-manager-wrapper {
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: rgb(0 0 0 / 10%) 0px 1px 5px 0px;
-}
-
-.netless-window-manager-sizer::before,
-.netless-window-manager-sizer::after {
-  background: transparent;
-}
-
-.controls {
+#controls {
   position: fixed;
-  top: 8px;
-  right: 8px;
+  top: 16px;
+  right: 16px;
   z-index: 9999;
   display: flex;
   align-items: stretch;
-  gap: 8px;
+  gap: 16px;
 }
 
-.controls button {
-  padding: 0 10px;
-  color: #333;
-  background-color: #fff;
-  border: 0;
+#controls button {
+  padding: 10px;
+  color: var(--color);
+  background-color: var(--bg-color);
+  border: none;
   border-radius: 3px;
   box-shadow: #00000029 0 1px 4px;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
 }
-.controls button:active {
+
+#controls button:active {
   box-shadow: inset #00000029 0 1px 4px;
 }
-.controls img {
-  width: 16px;
-  height: 16px;
-}
 
-#theme {
-  width: 32px;
-  height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0;
-}
-
-.netless-color-scheme-dark {
-  color: #eee;
-  background-color: #302e30;
-}
-.netless-color-scheme-dark .netless-window-manager-wrapper {
-  background-color: #121212;
-}
-.netless-color-scheme-dark .controls button {
-  color: #fff;
-  background-color: #43434d;
-}
-
-#theme-dark {
-  display: none;
-}
-#theme-light {
-  display: initial;
-}
-
-.netless-color-scheme-dark #theme-dark {
-  display: initial;
-}
-.netless-color-scheme-dark #theme-light {
-  display: none;
+.netless-window-manager-wrapper {
+  border-radius: 8px;
+  background-color: var(--bg-color);
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 5px 0px;
 }

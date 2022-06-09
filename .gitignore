@@ -7,5 +7,3 @@ yarn.lock
 
 .env
 .env.local
-
-playground/config.ts

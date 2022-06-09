@@ -1,92 +1,86 @@
+import { createFastboard, mount, Theme } from "@netless/fastboard";
+import { get_uid } from "./query";
+import { registering } from "./register";
 import "./style.css";
-import { FastboardApp, register, Theme } from "@netless/fastboard";
 
-import { apps, createFastboard, mount } from "@netless/fastboard";
-import { playground, logo } from "./config";
-
-const $app = document.getElementById("app") as HTMLDivElement;
-const $theme_btn = document.getElementById("theme") as HTMLButtonElement;
-const $reset_btn = document.getElementById("reset") as HTMLButtonElement;
-
-let fastboard: FastboardApp | undefined;
-let ui: ReturnType<typeof mount> | undefined;
-let theme: Theme = "light";
-
-function validate() {
-  if (!import.meta.env.VITE_APPID) {
-    $app.textContent = "Please set VITE_APPID in your .env file";
-    return false;
-  }
-  if (!import.meta.env.VITE_ROOM_UUID) {
-    $app.textContent = "Please set VITE_ROOM_UUID in your .env file";
-    return false;
-  }
-  if (!import.meta.env.VITE_ROOM_TOKEN) {
-    $app.textContent = "Please set VITE_ROOM_TOKEN in your .env file";
-    return false;
-  }
-
-  return true;
-}
+main().catch(console.error);
 
 async function main() {
-  await register_app();
+  await registering;
 
-  fastboard = await createFastboard({
+  const fastboard = await createFastboard({
     sdkConfig: {
       appIdentifier: import.meta.env.VITE_APPID,
       region: "cn-hz",
     },
     joinRoom: {
-      uid: Math.random().toString(36).slice(2),
+      uid: get_uid(),
       uuid: import.meta.env.VITE_ROOM_UUID,
       roomToken: import.meta.env.VITE_ROOM_TOKEN,
     },
   });
 
-  ui = mount(fastboard, $app);
+  const $ui = setup();
 
-  $reset_btn.onclick = () => {
-    if (fastboard) {
-      fastboard.cleanCurrentScene();
-      const { manager } = fastboard;
-      Object.keys(manager.apps || {}).forEach(manager.closeApp.bind(manager));
+  const fastboardUI = mount(fastboard, $ui.$whiteboard);
+
+  $ui.onReset(() => {
+    fastboard.cleanCurrentScene();
+    const { manager } = fastboard;
+    Object.keys(manager.apps || {}).forEach(manager.closeApp.bind(manager));
+  });
+
+  $ui.onThemeChanged(theme => fastboardUI.update({ theme }));
+
+  expose({ fastboard, room: fastboard.room, manager: fastboard.manager, ui: fastboardUI });
+}
+
+/** Put some object in `window` for debugging. */
+function expose(record: Record<string, any>) {
+  Object.assign(window, record);
+  console.debug("debug variables:", Object.keys(record).join());
+}
+
+/** Setup basic UI. */
+function setup() {
+  const $app = document.querySelector("#app")!;
+
+  const $whiteboard = $app.appendChild(document.createElement("div"));
+  $whiteboard.id = "whiteboard";
+
+  const $controls = $app.appendChild(document.createElement("div"));
+  $controls.id = "controls";
+
+  const $resetBtn = $controls.appendChild(document.createElement("button"));
+  $resetBtn.id = "reset";
+  $resetBtn.title = "Remove all apps & Clear whiteboard";
+  $resetBtn.textContent = "Reset";
+  let onResetCallback: (() => void) | undefined;
+  $resetBtn.onclick = () => onResetCallback && onResetCallback();
+
+  const $themeBtn = $controls.appendChild(document.createElement("button"));
+  $themeBtn.id = "theme";
+  const themeCallbacks: ((theme: Theme) => void)[] = [];
+  const prefersDark = matchMedia("(prefers-color-scheme: dark)");
+  let theme: Theme;
+  function toggleTheme(ev?: { matches: boolean }) {
+    if (ev) {
+      theme = ev.matches ? "dark" : "light";
+    } else {
+      theme = theme === "light" ? "dark" : "light";
     }
-  };
-  $reset_btn.disabled = false;
-
-  $theme_btn.onclick = () => {
-    theme = theme === "light" ? "dark" : "light";
-    document.documentElement.style.colorScheme = theme;
-    document.body.classList.toggle("netless-color-scheme-dark", theme === "dark");
-    ui && ui.update({ theme });
-  };
-
-  (window as any).fastboard = fastboard;
-  (window as any).room = fastboard.room;
-  (window as any).manager = fastboard.manager;
-  (window as any).ui = ui;
-}
-
-async function register_app() {
-  if (playground) {
-    const app = playground.default;
-    register({
-      kind: app.kind,
-      src: app,
-    });
-
-    const open = playground.open;
-    apps.clear();
-    apps.push({
-      icon: logo || "",
-      kind: app.kind,
-      label: app.kind.replace(/([a-z])([A-Z])/g, "$1 $2"),
-      onClick: fastboard => {
-        open ? open(fastboard.manager) : fastboard.manager.addApp({ kind: app.kind });
-      },
-    });
+    themeCallbacks.forEach(fn => fn(theme));
+    document.documentElement.dataset.theme = theme;
+    $themeBtn.textContent = theme[0].toUpperCase() + theme.slice(1);
+    $themeBtn.title = "Click to change to " + (theme === "light" ? "dark" : "light");
   }
-}
+  toggleTheme(prefersDark);
+  prefersDark.addEventListener("change", toggleTheme);
+  $themeBtn.onclick = toggleTheme.bind(null, undefined);
 
-if (validate()) main().catch(console.error);
+  return {
+    $whiteboard,
+    onReset: (fn: () => void) => (onResetCallback = fn),
+    onThemeChanged: (fn: (theme: Theme) => void) => (themeCallbacks.push(fn), fn(theme)),
+  };
+}
