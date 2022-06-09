@@ -16,9 +16,13 @@
   "engines": {
     "npm": "^8.0.0"
   },
+  "dependencies": {
+    "svelte": "^3.48.0"
+  },
   "devDependencies": {
     "@netless/fastboard": "^0.3.3",
     "@netless/window-manager": "^0.4.30",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.48",
     "vite": "^2.9.10",
     "white-web-sdk": "^2.16.24"
   }
