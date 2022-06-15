@@ -1,4 +1,4 @@
-# Community Netless Apps
+# Netless App Template
 
 [Netless App 文档](https://github.com/netless-io/window-manager/blob/master/docs/develop-app.md)
 
@@ -16,13 +16,13 @@
 
 在 .env 文件里[配置好房间](#配置白板房间)后，执行 `npm install` 安装依赖，执行 `npm start` 进行本地测试。
 
-> TODO: 在这里添加提交 app 的方式，可以是通过 issue (提交) 和 wiki (展示)
-
 ## 配置白板房间
 
 请将本目录下的 .env.example 文件复制一份，重命名为 .env 或 .env.local 后，在里面填写必须的白板房间信息。
 
-> TODO: 在这里添加领取白板房间的在线服务网址。
+## 提交到社区 App 列表
+
+开发完 App 后，可以在 [Community Apps](https://github.com/netless-io/community-apps) 仓库提交你的项目，方便更多人发现和使用。
 
 ## 清单
 
