@@ -8,7 +8,7 @@
 
 1.  点击右上角 `Use this template` 生成一个属于你自己的仓库
 
-    如果需要选用 TypeScript 以外的模版，请勾上 `Include all branches`
+    如果需要选用原生以外的模版，请勾上 `Include all branches`
 
     > 如果你安装了 [GitHub CLI](https://cli.github.com)，也可以用这个命令一键生成并 clone 本仓库
     >
