@@ -16,7 +16,7 @@
 
 2.  在 .env 文件里配置白板房间 UUID 和 Token
 
-    请将本目录下的 .env.example 文件复制一份，重命名为 .env 或 .env.local 后，在里面填写必须的白板房间信息。
+    请将本目录下的 .env.example 文件复制一份，重命名为 .env 或 .env.local 后，在里面填写必须的白板配置信息。你可以在 [Netless Workshop](https://workshop.netless.link) 申请专用的白板配置。
 
 3.  执行 `npm install` 安装依赖
 
