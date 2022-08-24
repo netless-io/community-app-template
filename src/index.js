@@ -1,6 +1,8 @@
 /// <reference types="vite/client" />
 
 import styles from "./style.css?inline";
+import {Client} from "@notionhq/client"
+
 
 /**
  * Register it before joining room:
@@ -20,33 +22,56 @@ import styles from "./style.css?inline";
  * @type {import("@netless/window-manager").NetlessApp}
  */
 const Counter = {
-  kind: "Counter",
-  setup(context) {
-    const box = context.getBox();
-    box.mountStyles(styles);
+    kind: "Counter",
+    setup(context) {
+        const box = context.getBox();
+        box.mountStyles(styles);
 
-    const $content = document.createElement("div");
-    $content.className = "app-counter";
-    box.mountContent($content);
 
-    const $button = document.createElement("button");
-    $content.appendChild($button);
+        const $content = document.createElement("div");
+        $content.className = "app-counter";
+        box.mountContent($content);
 
-    const storage = context.createStorage("counter", { count: 0 });
-    $button.onclick = ev => {
-      storage.setState({ count: storage.state.count + (ev.shiftKey ? -1 : 1) });
-    };
+        const $label1 = document.createElement("input");
+        $label1.setAttribute("type", "password");
+        $content.appendChild($label1);
+        const $label2 = document.createElement("input");
+        $label2.setAttribute("type", "password");
+        $content.appendChild($label2);
 
-    function refresh() {
-      $button.textContent = String(storage.state.count);
-    }
-    const dispose = storage.addStateChangedListener(refresh);
-    refresh();
+        const $buttonImport = document.createElement("button")
+        $buttonImport.innerText = "导入";
+        $content.appendChild($buttonImport);
+        $buttonImport.onclick = ev => {
+            const token = $label1.value;
+            let pageId = $label2.value;
+            const notion = new Client({auth: token});
+            (async () => {
+                const response = await notion.blocks.children.list({
+                    block_id: pageId,
+                    page_size: 50,
+                });
+                let importStr = "";
+                let resArray = response.results;
+                for(let i = 0;i < resArray.length;i++) {
+                    let res = resArray[i];
+                    if(res["type"] === 'paragraph') {
+                        if(res["paragraph"] !== undefined && res["paragraph"]["rich_text"] !== undefined) {
+                            let testList = res["paragraph"]["rich_text"];
+                            for(let k = 0;k < testList.length;k++) {
+                                importStr += testList["plain_text"];
+                            }
+                        }
+                    }
+                }
+                const room = context.getRoom();
+                room.insertText(0,0, importStr);
+            })();
+        };
 
-    context.emitter.on("destroy", () => {
-      dispose();
-    });
-  },
+
+
+    },
 };
 
 export default Counter;

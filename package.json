@@ -20,6 +20,9 @@
     "@netless/fastboard": "^0.3.3",
     "@netless/window-manager": "^0.4.30",
     "vite": "^2.9.10",
-    "white-web-sdk": "^2.16.24"
+    "white-web-sdk": "^2.16.34"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.1.1"
   }
 }
